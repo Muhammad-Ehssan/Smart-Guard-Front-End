@@ -2,7 +2,7 @@
 
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { BlurView } from "expo-blur";
 import LiveStreaming from "../Components/LiveStreaming";
 import Try from "../Components/try";
 import Home from "../Components/Home";
@@ -14,6 +14,7 @@ import Image_Inside from "../Components/camera2";
 import Video_List from "../Components/Video_List";
 import searchVideo from "../Components/search_video";
 import Siren from "../Components/siren";
+
 const Stack = createStackNavigator();
 
 const MainStackNavigator = () => {
@@ -23,7 +24,14 @@ const MainStackNavigator = () => {
         name="Home1"
         component={Home}
         options={{
+          headerTransparent: false,
           title: "Home",
+
+          headerShadowVisible: {
+            elevation: 5,
+            shadowOpacity: 1,
+            borderBottomWidth: 10,
+          },
         }}
       />
       <Stack.Screen

@@ -19,8 +19,9 @@ import {
   Modal,
   StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { getAuth } from "firebase/auth";
-
+import { Colors } from "react-native-paper";
 import LiveStreaming from "./LiveStreaming";
 import Selector from "./Selector";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -134,6 +135,7 @@ export default function Home({ navigation }) {
                 name="movie-search"
                 size={90}
                 color="black"
+                style={styles.shadow}
               />
               {/* <Image source={p1} style={{ width: 90, height: 90 }} /> */}
               <Text style={styles.btns}>Search Video</Text>
@@ -143,7 +145,12 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               onPress={() => navigation.navigate("Live Streaming")}
             >
-              <MaterialCommunityIcons name="cctv" size={90} color="black" />
+              <MaterialCommunityIcons
+                name="cctv"
+                size={90}
+                color="black"
+                style={styles.shadow}
+              />
               {/* <Image source={p2} style={{ width: 90, height: 90 }} /> */}
               <Text style={styles.btns}>Live Streaming</Text>
             </TouchableOpacity>
@@ -156,7 +163,12 @@ export default function Home({ navigation }) {
         >
           <View style={{ margin: 30 }}>
             <TouchableOpacity onPress={() => navigation.navigate("Siren1")}>
-              <FontAwesome name="bell" size={90} color="black" />
+              <FontAwesome
+                name="bell"
+                size={90}
+                color="black"
+                style={styles.shadow}
+              />
               {/* <Image source={p3} style={{ width: 90, height: 90 }} /> */}
               <Text style={[styles.btns, { marginLeft: 25 }]}>Siren</Text>
             </TouchableOpacity>
@@ -165,7 +177,12 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               onPress={() => navigation.navigate("New Person1")}
             >
-              <Entypo name="add-user" size={90} color="black" />
+              <Entypo
+                name="add-user"
+                size={90}
+                color="black"
+                style={styles.shadow}
+              />
               {/* <Image source={p4} style={{ width: 90, height: 90 }} /> */}
               <Text style={styles.btns}>New Person</Text>
             </TouchableOpacity>
@@ -266,6 +283,12 @@ const styles = StyleSheet.create({
     padding: 4,
     margin: 5,
   },
+  shadow: {
+    shadowOpacity: 2,
+    textShadowRadius: 10,
+    textShadowOffset: { width: 5, height: 2 },
+  },
+
   // header: {
   //   color: "blue",
   //   fontWeight: "bold",

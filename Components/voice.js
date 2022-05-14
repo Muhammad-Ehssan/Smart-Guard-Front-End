@@ -3,6 +3,13 @@ import { View, StyleSheet, Button, Text, Alert } from "react-native";
 import { Audio } from "expo-av";
 import Video_List from "./Video_List";
 import AppContext from "./AppContext";
+import {
+  IconButton,
+  Colors,
+  Surface,
+  Headline,
+  Title,
+} from "react-native-paper";
 
 export default function Voice({ navigation }) {
   // Refs for the audio
@@ -18,7 +25,7 @@ export default function Voice({ navigation }) {
   const [AudioPermission, SetAudioPermission] = useState(false);
   const [IsRecording, SetIsRecording] = useState(false);
   const [IsPLaying, SetIsPLaying] = useState(false);
-
+  const [btn_color, set_color] = useState(Colors.teal700);
   // Initial Load to get the audio permission
   useEffect(() => {
     GetPermission();
@@ -34,6 +41,7 @@ export default function Voice({ navigation }) {
   const StartRecording = async () => {
     try {
       // Check if user has given the permission to record
+      set_color(Colors.teal100);
       if (AudioPermission === true) {
         try {
           // Prepare the Audio Recorder
@@ -58,6 +66,7 @@ export default function Voice({ navigation }) {
   const StopRecording = async () => {
     try {
       // Stop recording
+      set_color(Colors.teal700);
       await AudioRecorder.current.stopAndUnloadAsync();
 
       // Get the recorded URI here
@@ -213,9 +222,20 @@ export default function Voice({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>You said: {message}</Text>
-      <Button
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Title>Press, Speak and Search Video</Title>
+
+      <Surface style={{ borderRadius: 500 }}>
+        <IconButton
+          icon="microphone"
+          color={btn_color}
+          size={150}
+          animated={true}
+          onPress={IsRecording ? StopRecording : StartRecording}
+          style={styles.shadow}
+        />
+      </Surface>
+      {/* <Button
         title={IsRecording ? "Stop Recording" : "Start Recording"}
         color={IsRecording ? "red" : "green"}
         onPress={IsRecording ? StopRecording : StartRecording}
@@ -224,18 +244,16 @@ export default function Voice({ navigation }) {
         title={IsPLaying ? "Stop Sound" : "Play Sound"}
         color={IsPLaying ? "red" : "orange"}
         onPress={IsPLaying ? StopPlaying : PlayRecordedAudio}
-      />
+      /> */}
 
       {/* <Video_List /> */}
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-    padding: 8,
+  shadow: {
+    shadowOpacity: 2,
+    textShadowRadius: 10,
+    textShadowOffset: { width: 5, height: 2 },
   },
 });

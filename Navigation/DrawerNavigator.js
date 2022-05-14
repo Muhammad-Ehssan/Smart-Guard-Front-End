@@ -13,7 +13,7 @@ import Signup from "../Components/Signup";
 import { MainStackNavigator } from "./Navigotr";
 import LiveStreaming from "../Components/LiveStreaming";
 import Speech from "../Components/voice";
-import Try from "../Components/try";
+import Try from "../Components/siren";
 import cam1 from "../Components/Selector";
 import AppContext from "../Components/AppContext";
 import { createStackNavigator } from "@react-navigation/stack";
