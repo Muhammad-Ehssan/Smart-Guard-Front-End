@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import { Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
+import { Entypo } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 
 const { width, height } = Dimensions.get("window");
 
@@ -9,7 +11,8 @@ export default function App() {
   const [videoUrl, setVideoUrl] = useState(
     "http://192.168.10.11:5000/video_stored/08042022-224243.mp4"
   );
-
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
   return (
     <View style={styles.container}>
       <Video

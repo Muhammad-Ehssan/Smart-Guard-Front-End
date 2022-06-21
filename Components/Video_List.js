@@ -3,6 +3,8 @@ import React, { useEffect, useState, useContext } from "react";
 import View_Video from "./Videos";
 import * as FileSystem from "expo-file-system";
 import AppContext from "./AppContext";
+import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
 
 export default function Video_List({ route }) {
   const myContext = useContext(AppContext);
@@ -19,12 +21,18 @@ export default function Video_List({ route }) {
   ]);
   return (
     <View>
-      <FlatList
-        data={Video_URI}
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => <View_Video item={url + item.uri} />}
-      />
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#86A8E7", "#D16BA5", "#5FFBF1"]}
+        style={styles.container}
+      >
+        <FlatList
+          data={Video_URI}
+          horizontal={false}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item, index }) => <View_Video item={url + item.uri} />}
+        />
+      </LinearGradient>
     </View>
   );
 }

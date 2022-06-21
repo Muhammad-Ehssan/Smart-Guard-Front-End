@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
+import { BlurView } from "expo-blur";
 
 export default function View_Video({ item }) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   return (
-    <View>
+    <BlurView intensity={100} style={{ marginTop: "10%", borderRadius: 5 }}>
       <Video
         ref={video}
         style={styles.video}
@@ -17,7 +18,7 @@ export default function View_Video({ item }) {
         resizeMode="contain"
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-    </View>
+    </BlurView>
   );
 }
 
