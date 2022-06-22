@@ -11,6 +11,7 @@ import {
 import { Audio } from "expo-av";
 import Video_List from "./Video_List";
 import AppContext from "./AppContext";
+import logo from "../assets/Talk.gif";
 import {
   IconButton,
   Colors,
@@ -171,50 +172,6 @@ export default function Voice({ navigation }) {
           },
         ]);
       });
-
-    // const xhr = new XMLHttpRequest();
-    // // 2. open request
-    // xhr.open("POST", "http://192.168.137.238:5000/voice");
-
-    // // 3. set up callback for request
-    // xhr.onload = () => {
-    //   const response = JSON.parse(xhr.response);
-    //   console.log(response);
-    //   // ... do something with the successful response
-    // };
-    // // 4. catch for request error
-    // xhr.onerror = (e) => {
-    //   console.log(e, "upload failed");
-    // };
-    // // 4. catch for request timeout
-    // xhr.ontimeout = (e) => {
-    //   console.log(e, "upload timeout");
-    // };
-    // // 4. create formData to upload
-    // //const formData = new FormData();
-    // var t = result.split(
-    //   "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540popeyeee%252FSmartGuard/Audio/"
-    // );
-    // t = result.split(".m4a");
-    // console.log(t);
-    // var ending = ".m4a";
-    // formData.append("file", {
-    //   uri: result, // this is the path to your file. see Expo ImagePicker or React Native ImagePicker
-    //   type: `audio/${ending}`, // example: image/jpg
-    //   name: `${t[0]}.${ending}`, // example: upload.jpg
-    // });
-    // // 6. upload the request
-    // xhr.send(formData);
-
-    // // 7. track upload progress
-    // if (xhr.upload) {
-    //   // track the upload progress
-    //   xhr.upload.onprogress = ({ total, loaded }) => {
-    //     const uploadProgress = loaded / total;
-
-    //     console.log(uploadProgress);
-    //   };
-    // }
   };
   // Function to stop the playing audio
   const StopPlaying = async () => {
@@ -231,32 +188,43 @@ export default function Voice({ navigation }) {
   };
 
   const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Title>Press, Speak and Search Video</Title>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        height: windowHeight,
+        backgroundColor: "white",
+      }}
+    >
+      <View style={{ marginTop: "50%", alignSelf: "center" }}>
+        <Title>Press, Speak and Search Video</Title>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Surface style={{ borderRadius: 500 }} elevation={5}>
+            <IconButton
+              icon="microphone"
+              color={btn_color}
+              size={150}
+              animated={true}
+              onPress={IsRecording ? StopRecording : StartRecording}
+              style={styles.shadow}
+            />
+          </Surface>
+        </View>
+      </View>
 
-      <Surface style={{ borderRadius: 500 }}>
-        <IconButton
-          icon="microphone"
-          color={btn_color}
-          size={150}
-          animated={true}
-          onPress={IsRecording ? StopRecording : StartRecording}
-          style={styles.shadow}
+      <View style={{ justifyContent: "flex-end" }}>
+        <Image
+          source={logo}
+          style={{
+            width: 200,
+            height: 200,
+          }}
         />
-      </Surface>
-      {/* <Button
-        title={IsRecording ? "Stop Recording" : "Start Recording"}
-        color={IsRecording ? "red" : "green"}
-        onPress={IsRecording ? StopRecording : StartRecording}
-      />
-      <Button
-        title={IsPLaying ? "Stop Sound" : "Play Sound"}
-        color={IsPLaying ? "red" : "orange"}
-        onPress={IsPLaying ? StopPlaying : PlayRecordedAudio}
-      /> */}
-
-      {/* <Video_List /> */}
+      </View>
     </View>
   );
 }
