@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../assets/Logo.png";
+import animation1 from "../assets/Smart.gif";
 import {
   StyleSheet,
   Text,
@@ -35,7 +36,10 @@ export default function Selector({ turnback, url, navigation }) {
           </TouchableOpacity>
         </View>
         <View>
-          <Image source={logo} style={{ width: windowWidth, height: 300 }} />
+          <Image
+            source={animation1}
+            style={{ width: windowWidth, height: 300 }}
+          />
         </View>
         <BlurView intensity={100} style={{ backgroundColor: "black" }}>
           <Text
@@ -56,6 +60,7 @@ export default function Selector({ turnback, url, navigation }) {
         <BlurView intensity={100} style={{ marginTop: "20%", borderRadius: 5 }}>
           <View style={{ flexDirection: "row", margin: 20 }}>
             <View style={{ margin: 20 }}>
+              {/* <Image style={{ width: 150, height: 100 }} source={animation1} /> */}
               <TouchableOpacity onPress={() => navigation.navigate("Camera1")}>
                 <Ionicons name="camera-outline" size={90} color="black" />
                 <Text style={styles.btns}>Open camera</Text>

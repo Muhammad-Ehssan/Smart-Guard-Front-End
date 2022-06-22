@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import { Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
 import { Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-
+import googleani from "../assets/Google.gif";
 const { width, height } = Dimensions.get("window");
 
 export default function App() {
@@ -13,19 +13,36 @@ export default function App() {
   );
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
+  const [display, setdisplay] = useState(true);
+  useEffect(() => {
+    setdisplay(true);
+  }, []);
+  setTimeout(() => {
+    setdisplay(false);
+    console.log("Now false");
+  }, 5000);
   return (
     <View style={styles.container}>
-      <Video
-        source={{ uri: videoUrl }}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        resizeMode="cover"
-        shouldPlay={false}
-        isLooping={false}
-        useNativeControls
-        style={styles.video}
-      />
+      {display ? (
+        <View>
+          <Image
+            source={googleani}
+            style={{ width: windowWidth, height: 300 }}
+          />
+        </View>
+      ) : (
+        <Video
+          source={{ uri: videoUrl }}
+          rate={1.0}
+          volume={1.0}
+          isMuted={false}
+          resizeMode="cover"
+          shouldPlay={false}
+          isLooping={false}
+          useNativeControls
+          style={styles.video}
+        />
+      )}
     </View>
   );
 }

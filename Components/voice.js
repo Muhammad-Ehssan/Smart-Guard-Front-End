@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { View, StyleSheet, Button, Text, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Button,
+  Text,
+  Alert,
+  Dimensions,
+  Image,
+} from "react-native";
 import { Audio } from "expo-av";
 import Video_List from "./Video_List";
 import AppContext from "./AppContext";
@@ -10,18 +18,19 @@ import {
   Headline,
   Title,
 } from "react-native-paper";
+import googleani from "../assets/Google.gif";
 
 export default function Voice({ navigation }) {
   // Refs for the audio
   const AudioRecorder = useRef(new Audio.Recording());
   const AudioPlayer = useRef(new Audio.Sound());
-
+  const [display, setdisplay] = useState(true);
   // States for UI
   const myContext = useContext(AppContext);
   let url = myContext.URL;
   url = url.concat("voice");
   const [RecordedURI, SetRecordedURI] = useState("");
-  const [message, setmessage] = useState("");
+  const [message, setmessage] = useState(1);
   const [AudioPermission, SetAudioPermission] = useState(false);
   const [IsRecording, SetIsRecording] = useState(false);
   const [IsPLaying, SetIsPLaying] = useState(false);
@@ -221,6 +230,7 @@ export default function Voice({ navigation }) {
     } catch (error) {}
   };
 
+  const windowWidth = Dimensions.get("window").width;
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Title>Press, Speak and Search Video</Title>
