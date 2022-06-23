@@ -50,7 +50,7 @@ export default function ViewImages({ navigation }) {
       uri: manipResult.uri, // this is the path to your file. see Expo ImagePicker or React Native ImagePicker
       type: `image/jpg`, // example: image/jpg
 
-      name: `${value + i}.jpg`, // example: upload.jpg
+      name: `${value}.jpg`, // example: upload.jpg
     });
     fetch(url, {
       method: "POST",
@@ -73,34 +73,15 @@ export default function ViewImages({ navigation }) {
           },
         ]);
       });
-
-    // fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     img: result,
-    //   }),
-    // })
-    //   .then()
-    //   .catch();
   };
 
   const sendto_server = async () => {
-    for (let i = 0; i < saved_images.length; i++) {
-      postImages_toserver(saved_images[i].uri, i);
-    }
+    postImages_toserver(saved_images);
   };
   const sendto_server_wrapper = async () => {
-    if (saved_images.length > 0) {
+    if (saved_images) {
       const get_res = await sendto_server();
-      const folder = await MediaLibrary.getAlbumAsync("UploadImages123", {
-        includeSmartAlbums: true,
-      });
-      console.log(folder);
-      const response = await MediaLibrary.deleteAlbumsAsync(folder.id);
+
       Alert.alert("Uploading ", "All images will be uploaded soon ", [
         {
           text: "OK",
@@ -110,11 +91,6 @@ export default function ViewImages({ navigation }) {
       ]);
       setready(false);
     } else {
-      const folder = await MediaLibrary.getAlbumAsync("UploadImages123", {
-        includeSmartAlbums: true,
-      });
-      console.log(folder);
-      const response = await MediaLibrary.deleteAlbumsAsync(folder.id);
       Alert.alert("Upload Unsuccessfull", "No images exist", [
         {
           text: "OK",
@@ -125,51 +101,46 @@ export default function ViewImages({ navigation }) {
       console.log("No images");
     }
   };
-  const removeImage = (id) => {
-    let arr = saved_images;
-    arr = arr.filter((item) => item.id != id);
-    set_saved_Images(arr);
-    console.log(saved_images.length, "saved");
-    console.log("DOne");
-  };
+
   return (
     <View>
       <View>
-        <Button title="Send" onPress={sendto_server_wrapper} />
+        <Text
+          style={{
+            fontSize: 20,
+            marginTop: "10%",
+            marginBottom: "10%",
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: "10%",
+            fontWeight: "bold",
+          }}
+        >
+          Send to server for Registeration
+        </Text>
       </View>
       {isready ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <View></View>
       )}
-      <FlatList
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        data={saved_images}
-        numColumns={3}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => {
-              removeImage(item.id);
-            }}
-          >
-            <Image
-              source={{ uri: item.uri, isStatic: true }}
-              /* Use item to set the image source */
-              key={item.id} /* Important to set a key for list items,
+      <Image
+        source={{ uri: saved_images, isStatic: true }}
+        /* Use item to set the image source */
+        /* Important to set a key for list items,
                        but it's wrong to use indexes as keys, see below */
-              style={{
-                width: 100,
-                height: 150,
-                borderWidth: 2,
-                borderColor: "#d35647",
-                resizeMode: "contain",
-                margin: 8,
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        style={{
+          width: 300,
+          height: 350,
+          borderWidth: 2,
+          borderColor: "#d35647",
+          resizeMode: "contain",
+          margin: 8,
+        }}
       />
+      <View>
+        <Button title="Send" onPress={sendto_server_wrapper} />
+      </View>
     </View>
   );
 }

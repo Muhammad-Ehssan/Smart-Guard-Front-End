@@ -33,6 +33,8 @@ Notifications.setNotificationHandler({
   handleNotification: async () => {
     return {
       shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
     };
   },
 });
@@ -60,21 +62,6 @@ export default function App() {
   //   });
   // });
 
-  useEffect(() => {
-    const backgroundSubscription =
-      Notifications.addNotificationResponseReceivedListener((notification) => {
-        console.log(notification); // passs the screen name in data and then navigate ot send http request
-      });
-
-    const foregroundSubscription =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log(notification);
-      });
-    return () => {
-      backgroundSubscription.remove();
-      foregroundSubscription.remove();
-    };
-  }, []);
   firebase_app;
   const [tempURL, settempURL] = useState("39.45.32.51");
   const [URL, setURL] = useState("http://" + tempURL + ":5000/");

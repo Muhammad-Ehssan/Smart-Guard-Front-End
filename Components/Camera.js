@@ -35,27 +35,16 @@ export default function Camera_Module({ turnback, url, navigation }) {
   };
 
   const takePhoto = async () => {
-    if (counter < 3) {
-      const photo = await ref.current.takePictureAsync({ base64: true });
-      setsaved(photo.uri);
-      hande_save(photo.uri);
-      setcount(counter + 1);
-    } else {
-      view_photos();
-    }
+    const photo = await ref.current.takePictureAsync({ base64: true });
+
+    view_photos(photo.uri);
 
     //console.log(images.length);
   };
-  const view_photos = async () => {
+  const view_photos = async (photo) => {
     console.log("called");
-    const folder = await MediaLibrary.getAlbumAsync("UploadImages123", {
-      includeSmartAlbums: true,
-    });
 
-    const response = await MediaLibrary.getAssetsAsync({ album: folder });
-    // console.log(response.assets[0]);
-    console.log(response.assets.length);
-    global.all_images = response.assets;
+    global.all_images = photo;
     navigation.navigate("ViewImages1");
   };
   useEffect(() => {
@@ -79,46 +68,43 @@ export default function Camera_Module({ turnback, url, navigation }) {
       <Badge size={30} style={{ backgroundColor: "black" }}>
         {counter}
       </Badge>
-      {counter < 4 ? (
-        <View>
-          <Camera
-            type={type}
-            style={styles.camera}
-            ratio="4:3"
-            ref={ref}
-            onFacesDetected={hanldeface}
-            faceDetectorSettings={{
-              mode: FaceDetector.FaceDetectorMode.accurate,
-              detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-              runClassifications: FaceDetector.FaceDetectorClassifications.none,
-              minDetectionInterval: 3000,
-              tracking: true,
-            }}
-          ></Camera>
-          <TouchableOpacity
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
+
+      <View>
+        <Camera
+          type={type}
+          style={styles.camera}
+          ratio="4:3"
+          ref={ref}
+          onFacesDetected={hanldeface}
+          faceDetectorSettings={{
+            mode: FaceDetector.FaceDetectorMode.accurate,
+            detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+            runClassifications: FaceDetector.FaceDetectorClassifications.none,
+            minDetectionInterval: 3000,
+            tracking: true,
+          }}
+        ></Camera>
+        <TouchableOpacity
+          onPress={() => {
+            setType(
+              type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}
+        >
+          <View
+            style={{
+              flex: 0.5,
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <View
-              style={{
-                flex: 0.5,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="camera-reverse-sharp" size={50} color="black" />
-              <Text style={{ fontWeight: "bold", fontSize: 32 }}>Flip</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View></View>
-      )}
+            <Ionicons name="camera-reverse-sharp" size={50} color="black" />
+            <Text style={{ fontWeight: "bold", fontSize: 32 }}>Flip</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

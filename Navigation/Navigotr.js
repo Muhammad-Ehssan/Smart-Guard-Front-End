@@ -14,7 +14,7 @@ import Image_Inside from "../Components/camera2";
 import Video_List from "../Components/Video_List";
 import searchVideo from "../Components/search_video";
 import Siren from "../Components/siren";
-
+import Get_Image from "../Components/Image";
 const Stack = createStackNavigator();
 
 const MainStackNavigator = () => {
@@ -100,6 +100,13 @@ const MainStackNavigator = () => {
         component={Video_List}
         options={{
           title: "Search Result",
+        }}
+      />
+      <Stack.Screen
+        name="Get_Image"
+        component={Get_Image}
+        options={{
+          title: "Get_Image",
         }}
       />
     </Stack.Navigator>

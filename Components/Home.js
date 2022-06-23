@@ -26,6 +26,7 @@ import Selector from "./Selector";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import * as Notifications from "expo-notifications";
 
 export default function Home({ navigation }) {
   useEffect(() => {
@@ -44,6 +45,22 @@ export default function Home({ navigation }) {
 
     fetchURL();
   });
+  useEffect(() => {
+    const backgroundSubscription =
+      Notifications.addNotificationResponseReceivedListener((notification) => {
+        console.log(notification); // passs the screen name in data and then navigate ot send http request
+        navigation.navigate("Get_Image");
+      });
+
+    const foregroundSubscription =
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log(notification);
+      });
+    return () => {
+      backgroundSubscription.remove();
+      foregroundSubscription.remove();
+    };
+  }, []);
   const auth = getAuth();
   const user = auth.currentUser;
   if (user) {
